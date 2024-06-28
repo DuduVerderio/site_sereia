@@ -2356,7 +2356,139 @@
         apareceuem: new Date().getTime(),
       });
     }, 5000);
+
   </script>
+
+<script>
+                                            //Ex1
+
+  let endPage = function () {
+    let maxHeight = window.scrollY + document.documentElement.clientHeight; 
+    let pageHeight = document.documentElement.offsetHeight;
+
+    if (maxHeight == pageHeight) { 
+      console.log('Rolou até o final');
+      document.removeEventListener('scroll', endPage);
+    };
+  };
+
+  document.addEventListener('scroll', endPage);
+
+  // ----------------------------------------------------------------------------------------- //
+                                            //Ex2
+
+  let orcBtn = document.querySelector('.page-scroll.btn'); 
+  orcBtn.addEventListener('click', function () { 
+    console.log('Clicou em FAÇA UM ORÇAMENTO');
+  });
+
+  // ----------------------------------------------------------------------------------------- //
+                                            //Ex3
+
+  let balloonTarget = document.querySelector('#call-me-baby'); 
+  let balloonObserver = new IntersectionObserver((entries) => { 
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { 
+        console.log('Visualizou FALE COM UM ATENDENTE');
+      }
+    });
+  });
+  balloonObserver.observe(balloonTarget);
+
+  // ----------------------------------------------------------------------------------------- //
+                                            //Ex4
+
+  let targets = document.querySelectorAll('.form-control'); 
+  
+  let check = function (event) {
+    let field = event.target.getAttribute('placeholder');
+    if(field == 'Seu email *'){
+    }
+    else if (targets.value != ''){
+      console.log(`Preencheu campo ${field.replace('*', '').toUpperCase()}`);
+      this.removeEventListener("change", check);
+    }
+  };
+
+  targets.forEach((target) => {
+    target.addEventListener("change", check);
+  })
+
+
+  let validEmail = document.querySelector(".form-group:nth-child(2)");
+  var config = { attributes: true, childList: true, characterData: true, subtree: true };
+
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (validEmail.className == "form-group success") {
+        console.log("Preencheu o campo EMAIL");
+        observer.disconnect();
+      }
+    })
+  });
+  observer.observe(targets[1], config);
+
+  
+  // ----------------------------------------------------------------------------------------- //
+                                            //Ex5
+
+    let formTarget = document.querySelector('#contactForm'); 
+    let executed = false;
+
+    function emptyItem(targets){
+      for(let i = 0; i < targets.length; i++){
+        let item = targets.item(i);
+        if(item.value.trim() === ''){
+          return true;
+        }
+      }
+      return false;
+    };
+
+    let checkAria = (mutationList) => {
+      for(const mutation of mutationList) {
+        if(mutation.target.getAttribute('aria-invalid') == 'false' && emptyItem(targets) === false && targets[1].getAttribute('aria-invalid') == 'false'){
+          addEventListener('change', function() {
+            if(executed != true){
+              console.log('Preencheu todo o formulário');
+              executed = true;
+            }
+         })
+            observerAria.disconnect();
+          }
+        }
+    };
+  
+    let observerAria = new MutationObserver(checkAria);
+    observerAria.observe(formTarget, config)
+
+
+  // ----------------------------------------------------------------------------------------- //
+                                            //Ex6
+
+  let menu = document.querySelector('ul'); 
+  menu.addEventListener("click", function(event){
+    let target = event.target; 
+    if(target.tagName === 'A'){ 
+      console.log(`Clicou no menu ${target.textContent.toUpperCase()}`);
+    }
+  });
+
+// ----------------------------------------------------------------------------------------- //
+                                            //Ex7
+
+  let imageTarget = document.querySelector('img.img-circle'); 
+  let imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { 
+      if (entry.isIntersecting){
+        console.log("Visualizou o banheiro");
+      }
+  })
+});
+
+  imageObserver.observe(imageTarget);
+
+</script>
 </body>
 
 </html>
