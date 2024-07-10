@@ -2,6 +2,22 @@
 <html lang="en">
 
 <head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PMZ25S39');</script>
+    <!-- End Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L8R72PQGCW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L8R72PQGCW', { 'debug_mode': true });
+  </script>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -908,6 +924,10 @@
 </head>
 
 <body id="page-top" class="index">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PMZ25S39"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
   <img src="images/balloon.svg" id="call-me-baby" />
   <!-- Navigation -->
   <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -1306,8 +1326,7 @@
   <script src="assets/bootstrap.min.js"></script>
 
   <!-- Plugin JavaScript -->
-  <script src="assets/jquery.easing.min.js"
-    crossorigin="anonymous"></script>
+  <script src="assets/jquery.easing.min.js" crossorigin="anonymous"></script>
 
   <script>
     (function ($) {
@@ -2232,7 +2251,6 @@
       };
     })(jQuery);
     $(function () {
-      let shouldFail = false;
       $('#contactForm input,#contactForm textarea').jqBootstrapValidation({
         preventSubmit: true,
         submitError: function ($form, event, errors) {
@@ -2252,9 +2270,7 @@
             firstName = name.split(' ').slice(0, -1).join(' ');
           }
           $.ajax({
-            url: (shouldFail = !shouldFail) // alterna entre falha e sucesso da submissão do contato
-              ? 'https://run.mocky.io/v3/9f2a669c-e0d8-463c-bcb1-ada3004d94e6' // sucesso na submissão
-              : 'https://run.mocky.io/v3/723e9027-4fe2-4697-8198-902e2123d854', // falha na submissão
+            url: 'https://sitesereiaform-am194oys8fmr.runkit.sh/', // notebook em https://runkit.com/lcrespilho/sitesereiaform
             type: 'POST',
             data: {
               name,
@@ -2360,51 +2376,47 @@
   </script>
 
 <script>
-                                            //Ex1
+  //Ex1 tags 
 
-  let endPage = function () {
-    let maxHeight = window.scrollY + document.documentElement.clientHeight; 
+  document.addEventListener('scroll', function () {
+    let maxHeight = window.scrollY + document.documentElement.clientHeight;
     let pageHeight = document.documentElement.offsetHeight;
 
-    if (maxHeight == pageHeight) { 
+    if (maxHeight == pageHeight) {
+      gtag('event', 'scroll_end'); //Ex1 hardcoded
       console.log('Rolou até o final');
-      document.removeEventListener('scroll', endPage);
     };
-  };
-
-  document.addEventListener('scroll', endPage);
+  });
 
   // ----------------------------------------------------------------------------------------- //
-                                            //Ex2
+  //Ex2 tags
 
-  let orcBtn = document.querySelector('.page-scroll.btn'); 
-  orcBtn.addEventListener('click', function () { 
+  document.querySelector('.page-scroll.btn').addEventListener('click', function () {
     console.log('Clicou em FAÇA UM ORÇAMENTO');
   });
 
   // ----------------------------------------------------------------------------------------- //
-                                            //Ex3
+  //Ex3 tags
 
-  let balloonTarget = document.querySelector('#call-me-baby'); 
-  let balloonObserver = new IntersectionObserver((entries) => { 
+  new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) { 
+      if (entry.isIntersecting) {
+        gtag('event', 'phone_popup'); //Ex8 hardcoded
         console.log('Visualizou FALE COM UM ATENDENTE');
       }
     });
-  });
-  balloonObserver.observe(balloonTarget);
+  }).observe(document.querySelector('#call-me-baby'));
 
   // ----------------------------------------------------------------------------------------- //
-                                            //Ex4
+  //Ex4 tags
 
-  let targets = document.querySelectorAll('.form-control'); 
-  
+  let targets = document.querySelectorAll('.form-control');
+
   let check = function (event) {
     let field = event.target.getAttribute('placeholder');
-    if(field == 'Seu email *'){
+    if (field == 'Seu email *') {
     }
-    else if (targets.value != ''){
+    else if (targets.value != '') {
       console.log(`Preencheu campo ${field.replace('*', '').toUpperCase()}`);
       this.removeEventListener("change", check);
     }
@@ -2428,67 +2440,133 @@
   });
   observer.observe(targets[1], config);
 
-  
+
   // ----------------------------------------------------------------------------------------- //
-                                            //Ex5
+  //Ex5 tags
 
-    let formTarget = document.querySelector('#contactForm'); 
-    let executed = false;
+  let formTarget = document.querySelector('#contactForm');
+  let executed = false;
 
-    function emptyItem(targets){
-      for(let i = 0; i < targets.length; i++){
-        let item = targets.item(i);
-        if(item.value.trim() === ''){
-          return true;
-        }
+  function emptyItem(targets) {
+    for (let i = 0; i < targets.length; i++) {
+      let item = targets.item(i);
+      if (item.value.trim() === '') {
+        return true;
       }
-      return false;
-    };
+    }
+    return false;
+  };
 
-    let checkAria = (mutationList) => {
-      for(const mutation of mutationList) {
-        if(mutation.target.getAttribute('aria-invalid') == 'false' && emptyItem(targets) === false && targets[1].getAttribute('aria-invalid') == 'false'){
-          addEventListener('change', function() {
-            if(executed != true){
-              console.log('Preencheu todo o formulário');
-              executed = true;
-            }
-         })
-            observerAria.disconnect();
+  let checkAria = (mutationList) => {
+    for (const mutation of mutationList) {
+      if (mutation.target.getAttribute('aria-invalid') == 'false' && emptyItem(targets) === false && targets[1].getAttribute('aria-invalid') == 'false') {
+        addEventListener('change', function () {
+          if (executed != true) {
+            console.log('Preencheu todo o formulário');
+            executed = true;
           }
-        }
-    };
-  
-    let observerAria = new MutationObserver(checkAria);
-    observerAria.observe(formTarget, config)
+        })
+        observerAria.disconnect();
+      }
+    }
+  };
+
+  let observerAria = new MutationObserver(checkAria);
+  observerAria.observe(formTarget, config)
 
 
   // ----------------------------------------------------------------------------------------- //
-                                            //Ex6
+  //Ex6 tags
 
-  let menu = document.querySelector('ul'); 
-  menu.addEventListener("click", function(event){
-    let target = event.target; 
-    if(target.tagName === 'A'){ 
+  document.querySelector('ul').addEventListener("click", function (event) {
+    let target = event.target;
+    if (target.tagName === 'A') {
       console.log(`Clicou no menu ${target.textContent.toUpperCase()}`);
+      gtag('event', `menu_${target.textContent.toLowerCase()}`); //Ex5 hardcoded
     }
   });
 
-// ----------------------------------------------------------------------------------------- //
-                                            //Ex7
+  // ----------------------------------------------------------------------------------------- //
+  //Ex7 tags
 
-  let imageTarget = document.querySelector('img.img-circle'); 
-  let imageObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { 
-      if (entry.isIntersecting){
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
         console.log("Visualizou o banheiro");
       }
-  })
-});
+    })
+  }).observe(document.querySelector('img.img-circle'));
 
-  imageObserver.observe(imageTarget);
+  
+
+  // ----------------------------------------------------------------------------------------- //
+  //Ex2 hardcoded
+
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        gtag('event', 'form_view');
+      }
+    })
+  }).observe(document.querySelector('#contactForm'));
+  
+
+  // ----------------------------------------------------------------------------------------- //
+  //Ex3 hardcoded
+
+  document.querySelector('#contactForm').addEventListener("change", function check(event){
+    let name = event.target.getAttribute('placeholder').replace('*', '').replace('Seu', '').toLowerCase().trim();
+    if(event.target.getAttribute('aria-invalid') == 'false'){
+      gtag('event', `form_${name}`);
+      this.removeEventListener('change', check);
+    }
+  });
+  
+
+  // ----------------------------------------------------------------------------------------- //
+  //Ex4 hardcoded
+  
+  new MutationObserver(function (entries){
+    if (document.querySelector('#success .alert-success')){
+      gtag('event', 'form_success');
+    } 
+    else if(document.querySelector('#success .alert-danger')){
+      gtag('event', 'form_error');
+    }
+  }).observe(document.querySelector('#success'), config);
+
+
+  // ----------------------------------------------------------------------------------------- //
+  //Ex6 hardcoded
+
+  function mediaButtons(target){
+    target.addEventListener('click', function(event){
+      //event.preventDefault();
+      let font;
+      //closest retorna o ancestral mais próximo, nesse caso, verifica se o ancestral é o footer, caso não for retorna null
+      if(target.closest('footer')){
+        font = 'site';
+      }
+      else if(target.closest('#team')){
+        font = 'dev';
+      }
+      gtag('event', `${font}_${target.href.replace('https://', '').replace('www.', '').replace('.com/', '')}`);
+    })
+  }
+
+  document.querySelectorAll('#team a').forEach(mediaButtons);
+  document.querySelectorAll('footer a').forEach(mediaButtons);
+
+
+  // ----------------------------------------------------------------------------------------- //
+  //Ex7 hardcoded
+
+  setTimeout(() => {
+    gtag('event', 'browsing_time');
+  }, 60000)
+
+
 
 </script>
 </body>
-
 </html>
