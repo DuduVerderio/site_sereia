@@ -2541,9 +2541,7 @@
 
   function mediaButtons(target){
     target.addEventListener('click', function(event){
-      //event.preventDefault();
       let font;
-      //closest retorna o ancestral mais próximo, nesse caso, verifica se o ancestral é o footer, caso não for retorna null
       if(target.closest('footer')){
         font = 'site';
       }
