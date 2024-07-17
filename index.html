@@ -2551,8 +2551,8 @@
   //Ex6 hardcoded
 
   function mediaButtons(target){
-    event.preventDefault();
     target.addEventListener('click', function(event){
+      event.preventDefault();
       let font;
       if(target.closest('footer')){
         font = 'site';
